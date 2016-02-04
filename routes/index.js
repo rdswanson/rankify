@@ -3,6 +3,15 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var passport = require('passport');
+var jwt = require('jsonwebtoken');
+
+/*
+  Accepts a secret token for authentication purposes. We attach this token to the userProperty specified.
+  In this case, that is payload. This means we can access our token using req.payload
+
+  We can pass this auth middleware in to our router paths to ensure users are logged in.
+*/
+var auth = jwt({secret: process.env.SECRET_TOKEN, userProperty: 'payload'});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
